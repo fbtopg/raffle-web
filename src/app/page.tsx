@@ -217,7 +217,7 @@ export default function Home() {
                       <div className="mb-4">
                         <div className="flex justify-between text-sm mb-1">
                           <span>Time Until Resolution</span>
-                          <span>{Math.round(progress)}% elapsed</span>
+                          <span>48 hours</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div 
