@@ -39,7 +39,7 @@
   ],
   "env_vars": [],
   "created": 1774571047.999323,
-  "updated": 1774571907.985516,
+  "updated": 1774572358.4030187,
   "source": "project-scan-v1"
 }
 ```
@@ -50,6 +50,6 @@
 - Framework: nextjs
 - Deploy Target: vercel
 - Directory: /home/geonu/workspace/projects/raffle-where-users
-- Updated: 1774571907.985516
+- Updated: 1774572358.403019
 - Files: .gitignore, AGENTS.md, CLAUDE.md, README.md, eslint.config.mjs, next-env.d.ts, next.config.ts, package-lock.json, package.json, postcss.config.mjs
 - Pages: src/app/layout.tsx, src/app/page.tsx
