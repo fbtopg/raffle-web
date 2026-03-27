@@ -10,7 +10,7 @@ interface Raffle {
   ticketsSold: number;
   totalTickets: number;
   endTime: Date;
-  status: 'active' | 'completed';
+  status: 'active' | 'finished';
 }
 
 interface User {
@@ -28,19 +28,44 @@ export default function Home() {
   const [ticketsToBuy, setTicketsToBuy] = useState<number>(1);
   const [selectedRaffleId, setSelectedRaffleId] = useState<number | null>(null);
   const [notification, setNotification] = useState<string>('');
+  const [wonRaffles, setWonRaffles] = useState<number[]>([]);
 
   useEffect(() => {
     // Initialize raffles
-    const initialRaffles: Raffle[] = PRIZES.map((prize, index) => ({
-      id: index + 1,
-      name: `$${prize} Prize Raffle`,
-      description: `Win a ${prize} prize! Buy your tickets now.`,
-      prize: prize,
-      ticketsSold: Math.floor(Math.random() * 50),
-      totalTickets: 100,
-      endTime: new Date(Date.now() + 86400000 * 3), // 3 days from now
-      status: 'active',
-    }));
+    const initialRaffles: Raffle[] = [
+      // Active raffles
+      ...PRIZES.map((prize, index) => ({
+        id: index + 1,
+        name: `$${prize} Prize Raffle`,
+        description: `Win a ${prize} prize! Buy your tickets now.`,
+        prize: prize,
+        ticketsSold: Math.floor(Math.random() * 50),
+        totalTickets: 100,
+        endTime: new Date(Date.now() + 86400000 * 3), // 3 days from now
+        status: 'active',
+      })),
+      // Finished raffles for demonstration
+      {
+        id: 101,
+        name: '$100 Special Prize Raffle',
+        description: 'A special limited-time raffle with a huge prize!',
+        prize: 100,
+        ticketsSold: 85,
+        totalTickets: 100,
+        endTime: new Date(Date.now() - 86400000), // 1 day ago
+        status: 'finished',
+      },
+      {
+        id: 102,
+        name: '$200 Grand Prize Raffle',
+        description: 'The grand prize of the season!',
+        prize: 200,
+        ticketsSold: 92,
+        totalTickets: 100,
+        endTime: new Date(Date.now() - 172800000), // 2 days ago
+        status: 'finished',
+      },
+    ];
     setRaffles(initialRaffles);
   }, []);
 
@@ -71,9 +96,32 @@ export default function Home() {
     setTimeout(() => setNotification(''), 3000);
   };
 
+  const checkResult = (raffleId: number) => {
+    if (wonRaffles.includes(raffleId)) {
+      setNotification('You already checked this result!');
+      setTimeout(() => setNotification(''), 3000);
+      return;
+    }
+
+    // Simulate result checking - randomly determine if user won
+    const won = Math.random() < 0.2; // 20% chance to win
+    
+    if (won) {
+      const raffle = raffles.find(r => r.id === raffleId);
+      setNotification(`🎉 Congratulations! You won $${raffle?.prize}!`);
+      setWonRaffles(prev => [...prev, raffleId]);
+      setUser(prev => ({ ...prev, points: prev.points + (raffle?.prize || 0) }));
+    } else {
+      setNotification("Better luck next time!");
+      setWonRaffles(prev => [...prev, raffleId]);
+    }
+    setTimeout(() => setNotification(''), 5000);
+  };
 
 
-  const activeRaffles = raffles;
+
+  const activeRaffles = raffles.filter(r => r.status === 'active');
+  const finishedRaffles = raffles.filter(r => r.status === 'finished');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -182,6 +230,82 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {finishedRaffles.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold mb-4">Finished Raffles</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {finishedRaffles.map(raffle => {
+                const userTickets = user.tickets.filter(t => t.raffleId === raffle.id);
+                const hasTickets = userTickets.length > 0;
+                const hasChecked = wonRaffles.includes(raffle.id);
+
+                return (
+                  <div key={raffle.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div className="bg-gradient-to-r from-gray-500 to-gray-700 p-4">
+                      <h3 className="text-xl font-bold text-white">{raffle.name}</h3>
+                      <p className="text-gray-200 text-sm mt-1">{raffle.description}</p>
+                      <span className="inline-block bg-gray-800 text-gray-200 text-xs px-2 py-1 rounded mt-2">
+                        Finished
+                      </span>
+                    </div>
+                    <div className="p-4">
+                      <div className="flex justify-between items-center mb-4">
+                        <div>
+                          <span className="text-gray-600 text-sm">Prize:</span>
+                          <p className="text-2xl font-bold text-green-600">${raffle.prize}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-gray-600 text-sm">Tickets:</span>
+                          <p className="font-bold">{raffle.ticketsSold}/{raffle.totalTickets}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="mb-4">
+                        <div className="flex justify-between text-sm mb-1">
+                          <span>Progress</span>
+                          <span>{Math.round((raffle.ticketsSold / raffle.totalTickets) * 100)}%</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="bg-gray-600 h-2 rounded-full"
+                            style={{ width: `${(raffle.ticketsSold / raffle.totalTickets) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {hasTickets 
+                            ? `Your Ticket #${userTickets.map(t => t.ticketNumber).join(', ')}`
+                            : 'You did not join'}
+                        </label>
+                      </div>
+
+                      <button
+                        onClick={() => checkResult(raffle.id)}
+                        disabled={hasChecked || !hasTickets}
+                        className={`w-full py-2 rounded-lg transition-colors font-semibold ${
+                          hasChecked
+                            ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                            : hasTickets
+                            ? 'bg-orange-600 text-white hover:bg-orange-700'
+                            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                        }`}
+                      >
+                        {hasChecked 
+                          ? 'Result Checked'
+                          : hasTickets
+                          ? 'Check Result'
+                          : 'No Tickets'}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {user.tickets.length > 0 && (
           <div className="mb-8">
