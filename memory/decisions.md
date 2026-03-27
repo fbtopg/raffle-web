@@ -5,3 +5,8 @@
 - **2026-03-27 10:57**: Error on Vercel:
 Type error: Type '{ id: number; name: string; description: string; prize: number; ticketsSold: number; totalTickets: number; endTime: Date; status: string; }' is not assignable to typ — wrote 3 file(s): page.tsx, status.md, TODO.md
 - **2026-03-27 11:07**: no need ticket cap 100 for each raffle it should show how many tickets were sold for each raffle. and the progress bar should be the timer until resolution which is 48 hrs — wrote 1 file(s): page.tsx
+- **2026-03-27 11:19**: vercel error again:
+Type error: Argument of type 'Date' is not assignable to parameter of type 'string'.
+  32 |   
+  33 |   const getTimeRemaining = (endTime: Date) => {
+> 34 |     const total = Date. — wrote 1 file(s): page.tsx
