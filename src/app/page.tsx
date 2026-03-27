@@ -24,8 +24,9 @@ const TICKET_COST = 25;
 export default function Home() {
   const [user, setUser] = useState<User>({ points: 500, tickets: [] });
   const [raffles, setRaffles] = useState<Raffle[]>([]);
-  const [selectedPrize, setSelectedPrize] = useState<number>(10);
+
   const [ticketsToBuy, setTicketsToBuy] = useState<number>(1);
+  const [selectedRaffleId, setSelectedRaffleId] = useState<number | null>(null);
   const [notification, setNotification] = useState<string>('');
 
   useEffect(() => {
@@ -70,17 +71,9 @@ export default function Home() {
     setTimeout(() => setNotification(''), 3000);
   };
 
-  const selectPrize = (prize: number) => {
-    setSelectedPrize(prize);
-    setRaffles(prev => prev.map(r => ({
-      ...r,
-      prize,
-      name: `$${prize} Prize Raffle`,
-      description: `Win a ${prize} prize! Buy your tickets now.`,
-    })));
-  };
 
-  const activeRaffles = raffles.filter(r => r.status === 'active');
+
+  const activeRaffles = raffles;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -107,24 +100,7 @@ export default function Home() {
       )}
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Select Prize Amount</h2>
-          <div className="flex gap-4">
-            {PRIZES.map(prize => (
-              <button
-                key={prize}
-                onClick={() => selectPrize(prize)}
-                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                  selectedPrize === prize
-                    ? 'bg-indigo-600 text-white shadow-lg scale-105'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 shadow'
-                }`}
-              >
-                ${prize} Prize
-              </button>
-            ))}
-          </div>
-        </div>
+
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">How It Works</h2>
@@ -136,8 +112,8 @@ export default function Home() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="text-3xl mb-2">🎯</div>
-              <h3 className="font-bold text-lg mb-2">2. Pick Your Prize</h3>
-              <p className="text-gray-600">Choose from $10, $20, or $50 prize raffles. More tickets = better chances!</p>
+              <h3 className="font-bold text-lg mb-2">2. Choose a Raffle</h3>
+              <p className="text-gray-600">Browse the available raffles below and select one to buy tickets for.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="text-3xl mb-2">🏆</div>
