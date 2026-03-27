@@ -34,7 +34,7 @@ export default function Home() {
     // Initialize raffles
     const initialRaffles: Raffle[] = [
       // Active raffles
-      ...PRIZES.map((prize, index) => ({
+      ...PRIZES.map((prize, index): Raffle => ({
         id: index + 1,
         name: `$${prize} Prize Raffle`,
         description: `Win a ${prize} prize! Buy your tickets now.`,
@@ -42,7 +42,7 @@ export default function Home() {
         ticketsSold: Math.floor(Math.random() * 50),
         totalTickets: 100,
         endTime: new Date(Date.now() + 86400000 * 3), // 3 days from now
-        status: 'active',
+        status: 'active' as const,
       })),
       // Finished raffles for demonstration
       {
