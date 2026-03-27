@@ -29,6 +29,14 @@ export default function Home() {
   const [selectedRaffleId, setSelectedRaffleId] = useState<number | null>(null);
   const [notification, setNotification] = useState<string>('');
   const [wonRaffles, setWonRaffles] = useState<number[]>([]);
+  
+  const getTimeRemaining = (endTime: Date) => {
+    const total = Date.parse(endTime) - Date.parse(new Date().toString());
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    return { total, hours, minutes, seconds };
+  };
 
   useEffect(() => {
     // Initialize raffles
@@ -67,6 +75,15 @@ export default function Home() {
       },
     ];
     setRaffles(initialRaffles);
+  }, []);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRaffles(currentRaffles => 
+        currentRaffles.map(raffle => raffle)
+      );
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const buyTickets = (raffleId: number) => {
@@ -188,22 +205,32 @@ export default function Home() {
                     </div>
                     <div className="text-right">
                       <span className="text-gray-600 text-sm">Tickets:</span>
-                      <p className="font-bold">{raffle.ticketsSold}/{raffle.totalTickets}</p>
+                      <p className="font-bold text-sm">{raffle.ticketsSold} tickets</p>
                     </div>
                   </div>
-                  
-                  <div className="mb-4">
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Progress</span>
-                      <span>{Math.round((raffle.ticketsSold / raffle.totalTickets) * 100)}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-indigo-600 h-2 rounded-full transition-all"
-                        style={{ width: `${(raffle.ticketsSold / raffle.totalTickets) * 100}%` }}
-                      />
-                    </div>
-                  </div>
+
+                  {raffle.status === 'active' && (() => {
+                    const timeRemaining = getTimeRemaining(raffle.endTime);
+                    const timeElapsed = 48 - Math.floor(timeRemaining.total / (1000 * 60 * 60));
+                    const progress = (timeElapsed / 48) * 100;
+                    return (
+                      <div className="mb-4">
+                        <div className="flex justify-between text-sm mb-1">
+                          <span>Time Until Resolution</span>
+                          <span>{Math.round(progress)}% elapsed</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="bg-green-600 h-2 rounded-full transition-all"
+                            style={{ width: `${progress}%` }}
+                          />
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s remaining
+                        </p>
+                      </div>
+                    );
+                  })()}
 
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -257,20 +284,7 @@ export default function Home() {
                         </div>
                         <div className="text-right">
                           <span className="text-gray-600 text-sm">Tickets:</span>
-                          <p className="font-bold">{raffle.ticketsSold}/{raffle.totalTickets}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Progress</span>
-                          <span>{Math.round((raffle.ticketsSold / raffle.totalTickets) * 100)}%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-gray-600 h-2 rounded-full"
-                            style={{ width: `${(raffle.ticketsSold / raffle.totalTickets) * 100}%` }}
-                          />
+                          <p className="font-bold text-sm">{raffle.ticketsSold} tickets</p>
                         </div>
                       </div>
 
