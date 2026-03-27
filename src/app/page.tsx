@@ -31,7 +31,7 @@ export default function Home() {
   const [wonRaffles, setWonRaffles] = useState<number[]>([]);
   
   const getTimeRemaining = (endTime: Date) => {
-    const total = Date.parse(endTime) - Date.parse(new Date().toString());
+    const total = Date.parse(endTime.toISOString()) - Date.parse(new Date().toISOString());
     const seconds = Math.floor((total / 1000) % 60);
     const minutes = Math.floor((total / 1000 / 60) % 60);
     const hours = Math.floor((total / (1000 * 60 * 60)) % 24);

@@ -4,3 +4,4 @@
 - **2026-03-27 10:53**: there should be Finished Raffles section below Active Raffles section. and here it shows raffles cards that are finished, and for these ones, instead of Buy button, there should be Check Result button — wrote 1 file(s): page.tsx
 - **2026-03-27 10:57**: Error on Vercel:
 Type error: Type '{ id: number; name: string; description: string; prize: number; ticketsSold: number; totalTickets: number; endTime: Date; status: string; }' is not assignable to typ — wrote 3 file(s): page.tsx, status.md, TODO.md
+- **2026-03-27 11:07**: no need ticket cap 100 for each raffle it should show how many tickets were sold for each raffle. and the progress bar should be the timer until resolution which is 48 hrs — wrote 1 file(s): page.tsx
