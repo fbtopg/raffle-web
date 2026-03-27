@@ -10,3 +10,4 @@ Type error: Argument of type 'Date' is not assignable to parameter of type 'stri
   32 |   
   33 |   const getTimeRemaining = (endTime: Date) => {
 > 34 |     const total = Date. — wrote 1 file(s): page.tsx
+- **2026-03-27 11:44**: But i still see the "-xx% elapsed" in active cards — wrote 1 file(s): page.tsx

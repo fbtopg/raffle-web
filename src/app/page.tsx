@@ -211,8 +211,8 @@ export default function Home() {
 
                   {raffle.status === 'active' && (() => {
                     const timeRemaining = getTimeRemaining(raffle.endTime);
-                    const timeElapsed = 48 - Math.floor(timeRemaining.total / (1000 * 60 * 60));
-                    const progress = (timeElapsed / 48) * 100;
+                    const totalTimeMs = 48 * 60 * 60 * 1000; // 48 hours in milliseconds
+                    const progress = (timeRemaining.total / totalTimeMs) * 100;
                     return (
                       <div className="mb-4">
                         <div className="flex justify-between text-sm mb-1">
@@ -222,7 +222,7 @@ export default function Home() {
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div 
                             className="bg-green-600 h-2 rounded-full transition-all"
-                            style={{ width: `${progress}%` }}
+                            style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
                           />
                         </div>
                         <p className="text-xs text-gray-500 mt-1">

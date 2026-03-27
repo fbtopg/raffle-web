@@ -40,7 +40,7 @@
   ],
   "env_vars": [],
   "created": 1774571047.999323,
-  "updated": 1774579353.6274788,
+  "updated": 1774579859.7247584,
   "source": "project-scan-v1 git:https://github.com/fbtopg/raffle-web.git"
 }
 ```
@@ -51,6 +51,6 @@
 - Framework: nextjs
 - Deploy Target: vercel
 - Directory: /home/geonu/workspace/projects/raffle-where-users
-- Updated: 1774579353.627479
+- Updated: 1774579859.724758
 - Files: .gitignore, AGENTS.md, CLAUDE.md, README.md, TODO.md, eslint.config.mjs, next-env.d.ts, next.config.ts, package-lock.json, package.json
 - Pages: src/app/layout.tsx, src/app/page.tsx
