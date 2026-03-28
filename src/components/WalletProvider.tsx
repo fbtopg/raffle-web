@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider, createConfig } from 'wagmi'
 import { mainnet, sepolia, polygon, polygonMumbai, arbitrum, arbitrumSepolia, base, baseSepolia } from 'wagmi/chains'
 import { http } from 'wagmi'
-import { RainbowKitProvider, darkTheme, lightTheme, defaultColors } from '@rainbow-me/rainbowkit'
+import { RainbowKitProvider, darkTheme, lightTheme } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
 import { useState } from 'react'
 
@@ -48,7 +48,6 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
         <RainbowKitProvider
           theme={isDarkMode ? darkTheme({
             accentColor: '#6760f5',
-            accentColorBackground: '#1b1a33',
             borderRadius: 'medium',
             fontStack: 'system',
             overlayBlur: 'small',
@@ -62,7 +61,6 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
             },
           }) : lightTheme({
             accentColor: '#6760f5',
-            accentColorBackground: '#edeaf8',
             borderRadius: 'medium',
             fontStack: 'system',
             overlayBlur: 'small',
