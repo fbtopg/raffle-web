@@ -57,7 +57,6 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
             actionColor: '#6760f5',
             disconnectedBannerColor: '#1b1a33',
             colors: {
-              ...defaultColors(),
               connectButton: '#6760f5',
               connectButtonInner: '#ffffff',
             },
@@ -72,7 +71,6 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
             actionColor: '#6760f5',
             disconnectedBannerColor: '#edeaf8',
             colors: {
-              ...defaultColors(),
               connectButton: '#6760f5',
               connectButtonInner: '#ffffff',
             },
