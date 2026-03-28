@@ -4,9 +4,9 @@
 {
   "schema": "hachi/project-memory-status/v1",
   "project_name": "raffle-where-users",
-  "purpose": "",
+  "purpose": "delegation",
   "status": "active",
-  "skill_name": "",
+  "skill_name": "delegation",
   "framework": "nextjs",
   "deploy_target": "vercel",
   "deploy_url": "",
@@ -14,7 +14,10 @@
   "files": [
     ".gitignore",
     "AGENTS.md",
+    "ALIGNMENT_PLAN.md",
+    "ALIGNMENT_SUMMARY.md",
     "CLAUDE.md",
+    "RAFFLE_SYSTEM_ALIGNMENT.md",
     "README.md",
     "TODO.md",
     "eslint.config.mjs",
@@ -32,6 +35,14 @@
     "src/app/globals.css",
     "src/app/layout.tsx",
     "src/app/page.tsx",
+    "src/components/WalletProvider.tsx",
+    "src/hooks/usePoints.ts",
+    "src/hooks/useRaffles.ts",
+    "src/hooks/useTickets.ts",
+    "src/hooks/useWallet.ts",
+    "src/lib/constants.ts",
+    "src/lib/types.ts",
+    "src/lib/wagmi.ts",
     "tsconfig.json"
   ],
   "pages": [
@@ -40,7 +51,7 @@
   ],
   "env_vars": [],
   "created": 1774571047.999323,
-  "updated": 1774579859.7247584,
+  "updated": 1774700734.9459846,
   "source": "project-scan-v1 git:https://github.com/fbtopg/raffle-web.git"
 }
 ```
@@ -48,9 +59,11 @@
 ## Summary
 - Project: raffle-where-users
 - Status: active
+- Purpose: delegation
+- Skill: delegation
 - Framework: nextjs
 - Deploy Target: vercel
 - Directory: /home/geonu/workspace/projects/raffle-where-users
-- Updated: 1774579859.724758
-- Files: .gitignore, AGENTS.md, CLAUDE.md, README.md, TODO.md, eslint.config.mjs, next-env.d.ts, next.config.ts, package-lock.json, package.json
+- Updated: 1774700734.945985
+- Files: .gitignore, AGENTS.md, ALIGNMENT_PLAN.md, ALIGNMENT_SUMMARY.md, CLAUDE.md, RAFFLE_SYSTEM_ALIGNMENT.md, README.md, TODO.md, eslint.config.mjs, next-env.d.ts
 - Pages: src/app/layout.tsx, src/app/page.tsx
